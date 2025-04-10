@@ -1,0 +1,8 @@
+.error-msg {
+  color: brown;
+  opacity: 0;
+  transition: all ease .5s;
+}
+.show {
+  opacity: 1;
+}
