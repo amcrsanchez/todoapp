@@ -1,14 +1,14 @@
 import { Component, computed, effect, signal, inject, Injector } from '@angular/core';
 import { Task } from '../../models/Task.model';
 import { JsonPipe } from '@angular/common';
-import { CommonModule } from '@angular/common';
+
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FilterStatus } from '../../enums/FilterStatus.enum';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [JsonPipe, CommonModule, ReactiveFormsModule],
+  imports: [JsonPipe, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

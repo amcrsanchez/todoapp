@@ -1,69 +1,108 @@
-<div [style.background-color]="colorController.value">
+<div [style.background-color]="colorController.value" [style.padding]="'50px'">
+  <h1>New Syntax</h1>
+  @switch (signalList()[1]) {
+    @case ('a') {
+      <p>you found the a</p>
+    }
+    @default {
+      <p>keep looking</p>
+    }
+  }
+  <input type="text" (keydown.enter)="onListEnter($event)">
+  <ul>
+    @for (item of signalList(); track item; let index = $index) {
+      <li>
+        {{index}} -> {{item}} <input type="button" value="delete" (click)="deleteItem(index)">
+      </li>
+      }@empty {
+      <li>List is empty</li>
+    }
+  </ul>
+
+  <input type="text" (change)="onChangeIterations($event)">
+  @for (item of createRange(signalIterations()); track $index) {
+    <h2>Hello world {{$index}}</h2>
+  }
   <h1>Dynamic class</h1>
   <input type="text" [formControl]="textControl">
   <span class="error-msg" [class.show]="textControl.invalid"> * Wrong Format</span>
   <hr>
-  <h1>Box modeller</h1>
-  <div
-  [style.width.px]="widthControl.value"
-  [style.height.px]="heightControl.value"
-  [style.background-color]="backgroundColorControl.value"
-  >
-  </div>
-  <p>width</p>
-  <input type="number" [formControl]="widthControl">
-  <p>height</p>
-  <input type="number" [formControl]="heightControl">
-  <p>color</p>
-  <input type="color" [formControl]="backgroundColorControl">
-  <hr>
-  <h1>Reactive forms module</h1>
-  <input type="color" [formControl]="colorController">
-  <hr>
-  <h1>Signal</h1>
-  <div [ngSwitch]="person().age">
-    <p *ngSwitchCase="1">you are a newborn</p>
-    <p *ngSwitchCase="5">everything is changing</p>
-    <p *ngSwitchCase="13">you are close to be not a boy anymore</p>
-    <p *ngSwitchCase="20">welcome to life</p>
-    <p *ngSwitchDefault>this will be hard</p>
-  </div>
-  <input type="text" [value]="person().age" (change)="onChangePersonAge($event)">
-  <div *ngIf="person().name == 'amilcar' && person().age > 40; else elseBlock">
-    Hi! my name is {{person().name}} and i am more than 40 years old
-  </div>
-  <ng-template #elseBlock>
-    Hi! it's me {{person().name}} and i am under or equal to 40 years old
-  </ng-template>
-  <input type="text" [value]="signalName()" (keyup)="signalNameKeyUpHandler($event)">
-  <h2>{{ signalName() }}</h2>
-  <h3>Number of items {{ tasks().length }}</h3>
-  <ul>
-    <li *ngFor="let item of tasks(); index as i">
-      {{i}} -> {{item}}
-    </li>
-  </ul>
-  <hr>
-  <ul>
-    @for (item of tasks(); track $index) {
-    <li>{{item}}</li>
-    }
-  </ul>
-  <input type="text" [(ngModel)]="newItem">
-  <button (click)="addNew()">add new item</button>
-  <h1>Hi, my name is {{ name }} and i am {{ age }} years old, i am {{ occupation }} at {{ company }}</h1>
-  <hr>
-  <input type="text" [value]="name">
-  <hr>
-  <h1>{{p.stringify()}}</h1>
-  <img [src]="p.image" alt="">
-  <button (dblclick)="clickHandler()">Click me!</button>
-  <hr>
-  <input type="text" (change)="changeHandler($event)">
-  <hr>
-  <h2>Keydown</h2>
-  <input type="text" (keydown.control.s)="keyDownHandler()">
-  <br>
-  <br>
-  <br>
-</div>
+    <h1>Box modeller</h1>
+    <div
+      [style.width.px]="widthControl.value"
+      [style.height.px]="heightControl.value"
+      [style.background-color]="backgroundColorControl.value"
+      >
+    </div>
+    <p>width</p>
+    <input type="number" [formControl]="widthControl">
+    <p>height</p>
+    <input type="number" [formControl]="heightControl">
+    <p>color</p>
+    <input type="color" [formControl]="backgroundColorControl">
+    <hr>
+      <h1>Reactive forms module</h1>
+      <input type="color" [formControl]="colorController">
+      <hr>
+        <h1>Signal</h1>
+        <div>
+          @switch (person().age) {
+            @case (1) {
+              <p>you are a newborn</p>
+            }
+            @case (5) {
+              <p>everything is changing</p>
+            }
+            @case (13) {
+              <p>you are close to be not a boy anymore</p>
+            }
+            @case (20) {
+              <p>welcome to life</p>
+            }
+            @default {
+              <p>this will be hard</p>
+            }
+          }
+        </div>
+        <input type="text" [value]="person().age" (change)="onChangePersonAge($event)">
+        @if (person().name == 'amilcar' && person().age > 40) {
+          <div>
+            Hi! my name is {{person().name}} and i am more than 40 years old
+          </div>
+        } @else {
+          Hi! it's me {{person().name}} and i am under or equal to 40 years old
+        }
+        <input type="text" [value]="signalName()" (keyup)="signalNameKeyUpHandler($event)">
+        <h2>{{ signalName() }}</h2>
+        <h3>Number of items {{ tasks().length }}</h3>
+        <ul>
+          @for (item of tasks(); track item; let i = $index) {
+            <li>
+              {{i}} -> {{item}}
+            </li>
+          }
+        </ul>
+        <hr>
+          <ul>
+            @for (item of tasks(); track $index) {
+              <li>{{item}}</li>
+            }
+          </ul>
+          <input type="text" [(ngModel)]="newItem">
+          <button (click)="addNew()">add new item</button>
+          <h1>Hi, my name is {{ name }} and i am {{ age }} years old, i am {{ occupation }} at {{ company }}</h1>
+          <hr>
+            <input type="text" [value]="name">
+            <hr>
+              <h1>{{p.stringify()}}</h1>
+              <img [src]="p.image" alt="">
+              <button (dblclick)="clickHandler()">Click me!</button>
+              <hr>
+                <input type="text" (change)="changeHandler($event)">
+                <hr>
+                  <h2>Keydown</h2>
+                  <input type="text" (keydown.control.s)="keyDownHandler()">
+                  <br>
+                    <br>
+                      <br>
+                      </div>
